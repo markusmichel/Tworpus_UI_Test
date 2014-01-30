@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="603.0" prefWidth="747.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <center>
+    <Pane id="main-container" fx:id="maincontent" prefHeight="200.0" prefWidth="1500.0" styleClass="main-container" />
+  </center>
+  <left>
+    <VBox id="sidebar-left" fx:id="sidebar_left" prefHeight="603.0" prefWidth="111.0">
+      <children>
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+      </children>
+    </VBox>
+  </left>
+  <stylesheets>
+    <URL value="@app.css" />
+  </stylesheets>
+</BorderPane>

@@ -1,0 +1,23 @@
+#sidebar-left {
+    -fx-background-color: #272930;
+}
+
+#sidebar-left .button {
+    -fx-background-color: #272930;
+    -fx-padding: 10px 0 10px 0; 
+    -fx-font-size: 12pt;
+    -fx-text-fill: #c9d4f6;
+    
+    -fx-border-color: #32353e white #1a1c20 white;
+    -fx-border-width: 1px 0 1px 0;
+    
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+#sidebar-left .button:hover {
+    -fx-background-color: grey;
+}
+
+#main-container {
+    -fx-background-color: white;
+}
