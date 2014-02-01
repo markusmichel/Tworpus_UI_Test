@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packageconfig>
+    
+    <visualizations>
+        <visualization>
+            <title>Visualisierung 1</title>
+            <filename>test.html</filename>
+        </visualization>
+        <visualization>
+            <title>Visualisierung 2</title>
+            <filename>test2.html</filename>
+        </visualization>
+    </visualizations>
+    
+</packageconfig>
