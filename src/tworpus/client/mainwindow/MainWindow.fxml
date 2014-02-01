@@ -5,23 +5,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="603.0" prefWidth="747.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="603.0" prefWidth="747.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="tworpus.client.mainwindow.MainWindowController">
   <center>
-    <Pane id="main-container" fx:id="maincontent" prefHeight="200.0" prefWidth="1500.0" styleClass="main-container" />
+    <Pane id="main-container" fx:id="maincontent" prefHeight="200.0" prefWidth="1500.0" style="-fx-background-color: lightgrey;" styleClass="main-container" />
   </center>
   <left>
-    <VBox id="sidebar-left" fx:id="sidebar_left" prefHeight="603.0" prefWidth="111.0">
+    <VBox id="sidebar-left" fx:id="sidebarLeft" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="120.0" spacing="2.0" BorderPane.alignment="TOP_LEFT">
       <children>
-        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
-        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
-        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
-        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
-        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
-        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Button" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Sitzung" wrapText="true" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Korpus erstellen" wrapText="true" />
+        <Button fx:id="buttonVisualization" mnemonicParsing="false" onAction="#showVisualizations" prefHeight="72.0" prefWidth="111.0" text="Visualisierungen" wrapText="true" />
+        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="111.0" text="Export" />
       </children>
     </VBox>
   </left>
   <stylesheets>
-    <URL value="@app.css" />
+    <URL value="@../app.css" />
   </stylesheets>
 </BorderPane>

@@ -4,46 +4,29 @@
  * and open the template in the editor.
  */
 
-package javafxapplication2;
+package tworpus.client;
 
-import java.net.URL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import tworpus.client.mainwindow.MainWindowController;
 
 /**
  *
  * @author Markus
  */
-public class JavaFXApplication2 extends Application {
-    
-    private Pane mainPane;
+public class TworpusApplication extends Application {
+   
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+        Parent root = FXMLLoader.load(MainWindowController.class.getResource("MainWindow.fxml"));  
         Scene scene = new Scene(root);
-        mainPane = (Pane) scene.lookup("#maincontent");
-        
-        initWebView();
         
         stage.setScene(scene);
         stage.show();
-    }
-    
-    private void initWebView() {
-        URL file = getClass().getResource("test.html");
-        WebView browser = new WebView();
-        WebEngine webEngine = browser.getEngine();
-        webEngine.load(file.toExternalForm());
-        mainPane.getChildren().add(browser);
     }
 
     /**
