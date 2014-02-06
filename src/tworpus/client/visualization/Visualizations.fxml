@@ -7,4 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="AnchorPane" fx:id="pane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: blue;&#10;-fx-width: 100%;" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="tworpus.client.visualization.VisualizationsController" />
+<VBox id="AnchorPane" prefHeight="451.0" prefWidth="631.0" style="" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="tworpus.client.visualization.VisualizationsController">
+  <children>
+    <MenuBar useSystemMenuBar="false">
+      <menus>
+        <Menu mnemonicParsing="false" text="Visualisierungen" fx:id="menu" />
+      </menus>
+    </MenuBar>
+    <VBox fx:id="pane" prefHeight="376.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
+  </children>
+</VBox>

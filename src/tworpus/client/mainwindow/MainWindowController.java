@@ -7,7 +7,6 @@
 package tworpus.client.mainwindow;
 
 import com.google.gson.Gson;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -29,6 +29,8 @@ import javafx.scene.web.WebView;
 import org.json.JSONException;
 import org.json.XML;
 import tworpus.client.Tweet;
+import tworpus.client.corpus.CreateCorpusController;
+import tworpus.client.session.OpenSessionController;
 import tworpus.client.visualization.VisualizationsController;
 
 /**
@@ -46,11 +48,50 @@ public class MainWindowController implements Initializable {
     
     
     private URL visualizationsFXML;
+    private URL createCorpusFXML;
+    private URL openSessionFXML;
+    
+    
+    @FXML
+    private BorderPane borderPane;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        createCorpusFXML = CreateCorpusController.class.getResource("CreateCorpus.fxml");
         visualizationsFXML = VisualizationsController.class.getResource("Visualizations.fxml");
+        openSessionFXML = OpenSessionController.class.getResource("OpenSession.fxml");
+        
+        showOpenSession();
     }   
+    
+    @FXML
+    public void showOpenSession() {
+        try {
+            FXMLLoader loader = new FXMLLoader(openSessionFXML);
+            Pane pane = (Pane)loader.load();
+            maincontent = pane;
+            borderPane.centerProperty().set(maincontent);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
+    public void showCorpusForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(createCorpusFXML);
+            Pane pane = (Pane)loader.load();
+            
+            // @TODO: may be deleted. Just for demonstation how to get controller
+            CreateCorpusController controller = loader.getController();
+            
+            maincontent = pane;
+            borderPane.centerProperty().set(maincontent);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     @FXML
     public void showVisualizations() {
@@ -60,29 +101,12 @@ public class MainWindowController implements Initializable {
         
         try {    
             Pane pane = FXMLLoader.load(visualizationsFXML);
-            //maincontent.getChildren().add(pane);
             maincontent = pane;
+            borderPane.centerProperty().set(maincontent);
         } catch (IOException ex) {
             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
-    }
-    
-    private void initWebView() {
-        URL file = getClass().getResource("test.html");
-        WebView browser = new WebView();
-        final WebEngine webEngine = browser.getEngine();   
-        webEngine.getLoadWorker().stateProperty().addListener(
-            new ChangeListener<Worker.State>() {
-                @Override
-                public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
-                    System.out.println("execute script");
-                    if (newState == Worker.State.SUCCEEDED) 
-                        webEngine.executeScript("document.init({\"test\":{\"content\":\"Turn this to JSON\",\"attrib\":\"moretest\"}});");
-                }
-            });
-        webEngine.load(file.toExternalForm());
-        maincontent.getChildren().add(browser);
     }
 
     private void test() {

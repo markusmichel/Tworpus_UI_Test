@@ -23,6 +23,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -45,8 +47,18 @@ public class VisualizationsController implements Initializable {
         }
     };
 
+    private EventHandler<ActionEvent> onVisualizationMenuItemClickListener = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent t) {
+            VisualizationMenuItem item = (VisualizationMenuItem) t.getSource();
+            showVisualization(item.getConfig());
+        }
+    };
+
     @FXML
     private VBox pane;
+    @FXML
+    private Menu menu;
 
     /**
      * Initializes the controller class.
@@ -55,40 +67,28 @@ public class VisualizationsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         createFilters();
         showVisualizationList();
+
+        PackageConfig[] packageConfigs = getPackageConfigObjects();
+        for (PackageConfig config : packageConfigs) {
+            for (VisualizationConfig cfg : config.getVisualizations()) {
+                MenuItem item = new VisualizationMenuItem(cfg);
+                menu.getItems().add(item);
+                item.setOnAction(onVisualizationMenuItemClickListener);
+            }
+        }
     }
 
     /**
-     * Creates filter variables user for finding package folders and
-     * configuration files.
-     */
-    private void createFilters() {
-        directoryFilter = new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        };
-
-        packageConfigFilter = new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return file.getName().toLowerCase().equals("config.xml");
-            }
-        };
-    }
-
-    /**
-     * Shows the list of available visualizations on the pane.
-     * Visualizations are represented as buttons. Every button implements 
-     * an onAction event.
+     * Shows the list of available visualizations on the pane. Visualizations
+     * are represented as buttons. Every button implements an onAction event.
      */
     private void showVisualizationList() {
         pane.getChildren().clear();
 
-        File[] configFiles = getConfigFiles();
-        for (File configFile : configFiles) {
-            PackageConfig config = PackageConfig.createFromXml(configFiles[0]);
-            for (VisualizationConfig vcfg : config.getVisualizations()) {
+        PackageConfig[] packageConfigs = getPackageConfigObjects();
+
+        for (PackageConfig packageConfig : packageConfigs) {
+            for (VisualizationConfig vcfg : packageConfig.getVisualizations()) {
                 Button button = new VisualizationButton(vcfg);
                 pane.getChildren().add(button);
 
@@ -108,31 +108,16 @@ public class VisualizationsController implements Initializable {
         pane.getChildren().clear();
         File htmlFile = config.getHtmlFile();
         final WebView browser = new WebView();
-        System.out.println("resizeable: " + browser.isResizable());
         final WebEngine webEngine = browser.getEngine();
-        
-        
-        browser.widthProperty().addListener( new ChangeListener<Object>() {
-            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) 
-            {                
-                Double width = (Double)newValue;     
-                System.out.println("window resized to " + width);
-                browser.setPrefWidth(width);
-            }
-        });
-        
-        
+
+        // @TODO: Get tweets
+        // @TODO: Converter middleware
         webEngine.getLoadWorker().stateProperty().addListener(
                 new ChangeListener<Worker.State>() {
                     @Override
                     public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState, Worker.State newState) {
                         if (newState == Worker.State.SUCCEEDED) {
-                            String jqueryLocation = VisualizationBrowser.class.getResource("jquery-2.1.0.min.js").toExternalForm();
-                            String d3Location = VisualizationBrowser.class.getResource("d3.v3.js").toExternalForm();
                             String testJson = "{\"test\":{\"content\":\"Turn this to JSON\",\"attrib\":\"moretest\"}}";
-                            
-                            //VisualizationBrowser.appendScript(webEngine, d3Location);
-                            //VisualizationBrowser.appendScript(webEngine, jqueryLocation);     
                             VisualizationBrowser.bootstrap(webEngine, testJson);
                         }
                     }
@@ -167,6 +152,45 @@ public class VisualizationsController implements Initializable {
             }
         }
         return configFiles.toArray(new File[configFiles.size()]);
+    }
+
+    /**
+     * Gets all package config files as PackageConfig objects. This function has
+     * to read and filter files from the filesystem. It also reads XMLFiles and
+     * converts them to Java Objects. Thus, it consumes CPU power on one side,
+     * on the other side it always returns correct results in realtime.
+     *
+     * @return An array of all present PackageConfig objects
+     */
+    public PackageConfig[] getPackageConfigObjects() {
+        File[] configFiles = getConfigFiles();
+        PackageConfig[] configObjects = new PackageConfig[configFiles.length];
+        int i = 0;
+        for (File file : configFiles) {
+            configObjects[i] = PackageConfig.createFromXml(configFiles[i++]);
+        }
+
+        return configObjects;
+    }
+
+    /**
+     * Creates filter variables user for finding package folders and
+     * configuration files.
+     */
+    private void createFilters() {
+        directoryFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.isDirectory();
+            }
+        };
+
+        packageConfigFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.getName().toLowerCase().equals("config.xml");
+            }
+        };
     }
 
 }

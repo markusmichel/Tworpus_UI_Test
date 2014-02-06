@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="tworpus.client.corpus.CreateCorpusController">
+  <children>
+    <Button layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#startFetching" prefHeight="66.0" prefWidth="169.0" text="Korpus erstellen" />
+    <ProgressIndicator fx:id="progressBar" layoutX="152.0" layoutY="146.0" prefHeight="54.0" prefWidth="71.0" progress="0.0" style="-fx-progress-color: green;" />
+    <Label layoutX="82.0" layoutY="159.0" prefHeight="29.0" prefWidth="82.0" text="Download" />
+    <ProgressIndicator fx:id="progressBarMerge" layoutX="152.0" layoutY="213.0" prefHeight="54.0" prefWidth="71.0" progress="0.0" />
+    <Label layoutX="28.0" layoutY="226.0" prefHeight="29.0" prefWidth="136.0" text="Dateien zusammenführen" />
+    <Label fx:id="labelDownloadTime" layoutX="272.0" layoutY="192.0" prefWidth="278.0" text="Platzhalter Downloadzeit (erstmal nur zum Testen)" />
+    <Label layoutX="28.0" layoutY="14.0" text="Hier kommen nich Filtermöglichkeiten zum Erstellen des Korpus rein" />
+  </children>
+</AnchorPane>
