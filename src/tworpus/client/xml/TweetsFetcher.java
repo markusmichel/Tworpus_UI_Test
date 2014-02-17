@@ -16,6 +16,11 @@ import java.util.logging.Logger;
 import twitter.Tweet;
 import tworpus.client.visualization.VisualizationsController;
 
+/**
+ * Downloads a list of tweets from Twitter and writes them to different XML files.
+ * Download itself is handeled by TweetFetcher class.
+ * TweetsFetcher instantiates them and handles multiple threads.
+ */
 public class TweetsFetcher  implements FileManagerUpdateListener, TweetFetcherProgressListener {
 
     private int max_threads = 30;

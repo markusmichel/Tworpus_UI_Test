@@ -28,7 +28,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.json.JSONException;
 import org.json.XML;
-import tworpus.client.Tweet;
+import tweet.Tweet;
 import tworpus.client.corpus.CreateCorpusController;
 import tworpus.client.session.OpenSessionController;
 import tworpus.client.visualization.VisualizationsController;
@@ -105,38 +105,6 @@ public class MainWindowController implements Initializable {
             borderPane.centerProperty().set(maincontent);
         } catch (IOException ex) {
             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
-        }
-    }
-
-    private void test() {
-        int count = 10;
-        Tweet[] tweets = new Tweet[count];
-        
-        for(int i = 0; i < count; i++) {
-            Tweet tweet = new Tweet();
-            tweet.setText("Text 123");
-            tweet.setAuthor("autor");
-            tweets[i] = tweet;
-        }
-
-        Gson gson = new Gson();
-        String json = gson.toJson(tweets); 
-        
-        PrintWriter out;
-        try {
-            out = new PrintWriter("filename.txt");
-            out.println(json);
-            out.close();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        
-        String xml = "<?xml version=\"1.0\" ?><test attrib=\"moretest\">Turn this to JSON</test>";
-        try {
-            String o = XML.toJSONObject(xml).toString();
-            System.out.println(o);
-        } catch (JSONException ex) {
             ex.printStackTrace();
         }
     }

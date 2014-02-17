@@ -5,6 +5,7 @@
  */
 package tworpus.client.visualization;
 
+import com.thoughtworks.xstream.XStream;
 import tworpus.client.visualization.configuration.VisualizationConfig;
 import tworpus.client.visualization.configuration.PackageConfig;
 import java.io.File;
@@ -28,6 +29,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import tweet.Message;
+import tweet.Tweet;
+import tweet.TweetContainer;
+import tweet.User;
+import tworpus.client.xml.TweetXmlConverter;
 
 /**
  * FXML Controller class
@@ -100,7 +106,9 @@ public class VisualizationsController implements Initializable {
     /**
      * Displays a single visualization on the main panel. The visualization is
      * based on a VisualizationConfig object, which is usually retrieved by a
-     * VisualizationButton.
+     * VisualizationButton or VisualizationMenuItem.
+     * VisualizationConfig is usually generated from a config.xml file
+     * in a visualization package folder.
      *
      * @param config Visualization to display
      */
@@ -109,6 +117,59 @@ public class VisualizationsController implements Initializable {
         File htmlFile = config.getHtmlFile();
         final WebView browser = new WebView();
         final WebEngine webEngine = browser.getEngine();
+        
+        // TESTCODE
+        String tweets = "";
+        String tweetsXmlFileName = "tweets/test/tweets.xml";
+        File tweetsXmlFile = new File(tweetsXmlFileName);
+        
+        
+        User user  = new User();
+        user.setFullName("Vorname Nachname");
+        user.setScreenName("screenname");
+        user.setUserId("sdfe6486");
+        
+        Message message = new Message();
+        message.setChars(10);
+        message.setLanguage("de");
+        message.setText("TEXT 1234");
+        message.setWords(20);
+        
+        Tweet tweet1 = new Tweet();
+        tweet1.setDate("DATUM 1");
+        tweet1.setFavoured(10);
+        tweet1.setId("13254");
+        tweet1.setRetweets(23);
+        tweet1.setUser(user);
+        tweet1.setMessage(message);
+        
+        Tweet tweet2 = new Tweet();
+        tweet2.setDate("DATUM 1");
+        tweet2.setFavoured(10);
+        tweet2.setId("13254");
+        tweet2.setRetweets(23);
+        tweet2.setMessage(message);
+        tweet2.setUser(user);
+        
+        Tweet[] tweetsArr = new Tweet[]{tweet1, tweet2};
+        String xml = TweetXmlConverter.tweetsToXml(tweetsArr);
+        System.out.println(xml); 
+        
+        XStream stream = Tweet.getXStream();
+        Object foo = stream.fromXML(
+                "<tweets>" +
+                "  <tweet id=\"13254\">" +
+                "    <user id=\"sdfe6486\">" +
+                "      <screenName>screenname</screenName>" +
+                "      <fullName>Vorname Nachname</fullName>" +
+                "    </user>" +
+                "    <date>DATUM 1</date>" +
+                "    <retweets>23</retweets>" +
+                "    <favoured>10</favoured>" +
+                "    <text chars=\"10\" words=\"20\" lang=\"de\">TEXT 1234</text>" +
+                "  </tweet></tweets>");
+        
+        // END TESTCODE
 
         // @TODO: Get tweets
         // @TODO: Converter middleware
